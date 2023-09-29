@@ -1,3 +1,5 @@
-para ejecutarlo es : gcc -Wall -fopenmp -std=c99 EjercicioB.c -o EjercicioB
-tiempo en guane : 0.0001 ms
-tiempo en mi maquina : 0.2345
+para ejecutarlo es :gcc -Wall -EjecicioB.c -o EjercicioB
+./EjercicioB
+
+
+tiempo en mi maquina: 6.54s
