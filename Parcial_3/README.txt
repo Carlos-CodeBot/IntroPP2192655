@@ -43,4 +43,4 @@ Una vez compilado, el programa se puede ejecutar mediante el archivo ejecutable 
 
 gcc -Os -std=c99 o_NFA -o o_NFA
 
-
+(Si se puede correr en local, si se tienen todas las librerias y modulos instalados para su correcto uso.)
