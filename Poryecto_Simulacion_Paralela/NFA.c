@@ -56,24 +56,21 @@ int nfa(node** graph, int current, char* input,
 }
 
 //Function to generate binary strings of size n
-void generate(char** arr, int size, char *a)
-{
-	if (size==0)
-	{
-		strcpy(arr[row], a);
-		row++;
-		return;
-	}
-	char b0[MAX_SIZE] = {'\0'};
-	char b1[MAX_SIZE] = {'\0'};
-	b0[0] = '0';
-	b1[0] = '1';
+void generate(char** arr, int size, int power) {
+	int i, j;
+	#pragma omp parallel for private(i, j)
+    for(i = 0; i < power; i++) {
+        char a[size+1]; // Local array for each thread
+        a[size] = '\0'; // Null-terminating the string
 
-	//Recursively generate the binary string
-	generate((char**)arr, size-1, strcat(b0,a)); //Add 0 in front
-	generate((char**)arr, size-1, strcat(b1,a)); //Add 1 in front
+        int num = i;
+        for(j = size - 1; j >= 0; j--) {
+            a[j] = (num % 2) + '0';
+            num /= 2;
+        }
+        strcpy(arr[i], a);
+    }
 	return;
-
 }
 
 void freeGraph(node** graph, int n) {
@@ -146,7 +143,7 @@ int main()
 			arr[i] = (char*)malloc((size + 1) * sizeof(char));
 
 		char a[MAX_SIZE] = {'\0'};
-		generate((char**)arr, size, a); // Generate inputs
+		generate((char**)arr, size, power); // Generate inputs
 
 		#pragma omp parallel for
 		for (i = 0; i < power; i++)
