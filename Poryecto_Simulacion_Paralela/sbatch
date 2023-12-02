@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --job-name=MPI
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4  # Ajusta esto según el número de hilos que deseas utilizar
+
+# Cargar Modulo de gcc
+module load devtools/gcc/6.2.0
+
+# Establecer el número de hilos para OpenMP
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+# Compilar el programa NFA con soporte para OpenMP
+gcc -fopenmp -Os -std=c99 NFA.c -o NFA
+
+# Ejecutar el programa NFA
+./NFA
+
+# Compilar el programa o_NFA
+gcc -Os -std=c99 o_NFA.c -o o_NFA
+
+# Ejecutar el programa o_NFA
+./o_NFA
